@@ -18,7 +18,7 @@ class Calendar extends Component {
 
     setUpCalendar() {
         const date = new Date();
-        const firstDay = new Date(date.getFullYear(), date.getMonth()+1, 1);
+        const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
 
         return {date: firstDay};
     }
@@ -43,6 +43,9 @@ class Calendar extends Component {
     }
 
     render() {
+        const totNumDays = this.calculateNumDays(this.state.date.getFullYear(),this.state.date.getMonth());
+        const totNumWeeks = Math.ceil(totNumDays / 7);
+        let isFirstWeek = true;
         const weeks = [];
 
         // start at 1 because firstday = 1, iterate by week by incrementing by 7
@@ -52,14 +55,15 @@ class Calendar extends Component {
         let diff = 0 - date.getDay();
         date.setDate(date.getDate() + diff);
 
-        for(let i = 1; i <= 1; i += 7) {
+        for(let i = 1; i <= totNumDays; i += 7) {
             const week = [];
             // iterate through days of week and populate week array
             for(let j = 0; j < 7; j++){
                 let newDate = new Date(date);
-                week.push(<CalendarTile date={newDate}/>);
+                week.push(<CalendarTile date={newDate} isFirstWeek={isFirstWeek}/>);
                 date.setDate(date.getDate() + 1);
             }
+            isFirstWeek = false;
             weeks.push(week);
         }
 
