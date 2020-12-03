@@ -7,9 +7,9 @@
 .week {
   display: flex;
   width: 100%;
+  height: calc(100vh/5);
 }
 .calendarTile {
-  /* flex-basis:calc(100%/7); */
   border: 1px solid black;
   width: calc(100% / 7);
   text-align: center;

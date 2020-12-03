@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import CalendarTile  from '../components/CalendarTile.js'
 import {MONTH_MODE, WEEK_MODE, DAY_MODE} from '../ViewMode.js'
+import EventModal  from './EventModal.js'
 
 class Calendar extends Component {
     constructor(props) {
         super(props);
+        // this.state = {isShowingModal: false};
         this.state = this.setUpCalendar();
+        this.state.isShowingModal = false;
     }
 
     componentDidMount() {
@@ -48,6 +51,11 @@ class Calendar extends Component {
         let isFirstWeek = true;
         const weeks = [];
 
+        let modal;
+        if(this.state.isShowingModal){
+          modal = <EventModal clickedTile={this.state.clickedTile}/>;
+        }
+
         // start at 1 because firstday = 1, iterate by week by incrementing by 7
         let date = new Date(this.state.date);
 
@@ -69,11 +77,30 @@ class Calendar extends Component {
 
 
         return (
-            <div className="month">
+            <div className="month" onClick={this.onTileClick}>
                 {weeks.map(el => <div className="week">{el}</div>)}
+                {modal}
             </div>
           );
     }
+
+    
+  onTileClick = (e) => {
+     if(e.target.classList.contains("eventModalContainer") === false && this.state.isShowingModal === true){
+        this.setState({isShowingModal: false}); 
+        return;
+     } else if(e.target.classList.contains("eventModalContainer") === true && this.state.isShowingModal === true){
+         return;
+     }
+    this.setState({
+        isShowingModal: true,
+        clickedTile: {
+            day: e.target.getAttribute("data-day"),
+            month: e.target.getAttribute("data-month"),
+            year: e.target.getAttribute("data-year")
+        }
+    });
+  }
 }
 
 export default Calendar;

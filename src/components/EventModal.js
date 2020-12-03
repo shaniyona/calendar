@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 class EventModal extends Component {
     constructor(props){
         super(props);
-        console.log("clicked in cal tile");
 
     }
   render() {
+    console.log(this.props);
     return (
         <div className="eventModalContainer">
-            <h1>WHATS UP</h1>
+            <h1>{this.props.clickedTile.day}</h1>
         </div>
     )
   }

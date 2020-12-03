@@ -1,23 +1,13 @@
 import React, { Component } from 'react';
-import EventModal  from './EventModal.js'
 
 class CalendarTile extends Component {
   constructor(props) {
     super(props);
-    this.state = {isShowingModal: false};
-    console.log(props);
   }
 
   render() {
-    let modal;
-    if(this.state.isShowingModal){
-      // console.log("IN IF STATEMENT")
-      modal = <EventModal />;
-      // console.log(modal);
-    }
 
     let dayName;
-    console.log("before switch");
 
     switch(this.props.date.getDay()) {
       case 0: dayName = 'SUN'; break;
@@ -48,10 +38,8 @@ class CalendarTile extends Component {
       default: monthName = "";
     }
     
-    console.log("before return statement");
-    console.log(dayName);
     return (
-      <div className="calendarTile" onClick={this.onTileClick}>
+      <div className="calendarTile" data-month={monthName} data-day={this.props.date.getDate()} data-year={this.props.date.getFullYear()}>
         {this.props.isFirstWeek
           ? <p>{dayName}</p>
           : null
@@ -61,15 +49,9 @@ class CalendarTile extends Component {
           : null
         }
         <span>{this.props.date.getDate()}</span>
-        {modal}
       </div>
 
     )
-  }
-
-  onTileClick = (e) => {
-    // console.log(e);
-    this.setState({isShowingModal: true});
   }
 }
 
