@@ -6,20 +6,19 @@ class EventModal extends Component {
 
     }
   render() {
-    console.log(this.props);
     return (
-        <div className="eventModalContainer">
-          <div className="eventModalFormNavBar">
-            <span>X</span>
+        <div className="modal eventModalContainer">
+          <div className="modal eventModalFormNavBar">
+            <span className="modal">X</span>
           </div>
-          <form className="eventModalForm">
-            <input type="text" placeholder="Event title"></input>
-            <input type="date"></input>
-            <input type="time"></input>
-            <input type="text" placeholder="Enter location"></input>
+          <form className="modal eventModalForm">
+            <input className="modal" type="text" placeholder="Event title"></input>
+            <input className="modal" type="date" defaultValue={this.props.date}></input>
+            <input className="modal" type="time" defaultValue={this.props.time}></input>
+            <input className="modal" type="text" placeholder="Enter location"></input>
           </form>
-          <div className="eventModalFormFooter">
-            <button type="button">Save</button>
+          <div className="modal eventModalFormFooter">
+            <button className="modal" type="button">Save</button>
           </div>
         </div>
     )

@@ -23,7 +23,10 @@ class Calendar extends Component {
         const date = new Date();
         const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
 
-        return {date: firstDay};
+        return {
+            date: date,
+            firstDay: firstDay
+        };
     }
 
     calculateNumDays(year, month) {
@@ -46,18 +49,35 @@ class Calendar extends Component {
     }
 
     render() {
-        const totNumDays = this.calculateNumDays(this.state.date.getFullYear(),this.state.date.getMonth());
+        const totNumDays = this.calculateNumDays(this.state.firstDay.getFullYear(),this.state.firstDay.getMonth());
         const totNumWeeks = Math.ceil(totNumDays / 7);
         let isFirstWeek = true;
         const weeks = [];
 
         let modal;
         if(this.state.isShowingModal){
-          modal = <EventModal clickedTile={this.state.clickedTile}/>;
+            const minutes = this.state.date.getMinutes();
+            const hours = this.state.date.getHours();
+            const day = this.state.date.getDate();
+            const month = this.state.date.getMonth() + 1;
+            const year = this.state.date.getFullYear();
+
+            const formattedMinutes = (minutes < 10) ? `0${minutes}` : minutes; 
+            const formattedHours = (hours < 10) ? `0${hours}` : hours; 
+            const formattedDay = (day < 10) ? `0${day}` : day;
+            const formattedMonth = (month < 10) ? `0${month}` : month;
+            const formattedDate = `${year}-${formattedMonth}-${formattedDay}`
+            const formattedTime = `${formattedHours}:${formattedMinutes}`;
+
+            modal = <EventModal 
+                clickedTile={this.state.clickedTile}
+                time={formattedTime}
+                date={formattedDate}
+            />;
         }
 
         // start at 1 because firstday = 1, iterate by week by incrementing by 7
-        let date = new Date(this.state.date);
+        let date = new Date(this.state.firstDay);
 
          //setting first day of week as date
         let diff = 0 - date.getDay();
@@ -86,11 +106,11 @@ class Calendar extends Component {
 
     
   onTileClick = (e) => {
-     if(e.target.classList.contains("eventModalContainer") === false && this.state.isShowingModal === true){
-        this.setState({isShowingModal: false}); 
+     if(e.target.classList.contains("modal") === false && this.state.isShowingModal === true){
+        this.setState({isShowingModal: false});
         return;
-     } else if(e.target.classList.contains("eventModalContainer") === true && this.state.isShowingModal === true){
-         return;
+     } else if(e.target.classList.contains("modal") === true && this.state.isShowingModal === true){ 
+        return;
      }
     this.setState({
         isShowingModal: true,
