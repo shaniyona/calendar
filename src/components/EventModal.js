@@ -9,7 +9,18 @@ class EventModal extends Component {
     console.log(this.props);
     return (
         <div className="eventModalContainer">
-            <h1>{this.props.clickedTile.day}</h1>
+          <div className="eventModalFormNavBar">
+            <span>X</span>
+          </div>
+          <form className="eventModalForm">
+            <input type="text" placeholder="Event title"></input>
+            <input type="date"></input>
+            <input type="time"></input>
+            <input type="text" placeholder="Enter location"></input>
+          </form>
+          <div className="eventModalFormFooter">
+            <button type="button">Save</button>
+          </div>
         </div>
     )
   }
