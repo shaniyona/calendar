@@ -9,7 +9,7 @@ class EventModal extends Component {
     return (
         <div className="modal eventModalContainer">
           <div className="modal eventModalFormNavBar">
-            <span className="modal">X</span>
+            <span className="modal" onClick={this.props.onCloseHandler}>X</span>
           </div>
           <form className="modal eventModalForm">
             <input className="modal" type="text" placeholder="Event title"></input>
@@ -18,7 +18,7 @@ class EventModal extends Component {
             <input className="modal" type="text" placeholder="Enter location"></input>
           </form>
           <div className="modal eventModalFormFooter">
-            <button className="modal" type="button">Save</button>
+            <button className="modal" type="button" onClick={this.props.onCloseHandler}>Save</button>
           </div>
         </div>
     )

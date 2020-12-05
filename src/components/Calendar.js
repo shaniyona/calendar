@@ -69,10 +69,10 @@ class Calendar extends Component {
             const formattedDate = `${year}-${formattedMonth}-${formattedDay}`
             const formattedTime = `${formattedHours}:${formattedMinutes}`;
 
-            modal = <EventModal 
-                clickedTile={this.state.clickedTile}
-                time={formattedTime}
-                date={formattedDate}
+            modal = <EventModal clickedTile={this.state.clickedTile}
+                                time={formattedTime}
+                                date={formattedDate}
+                                onCloseHandler={this.modalCloseHandler}
             />;
         }
 
@@ -120,6 +120,10 @@ class Calendar extends Component {
             year: e.target.getAttribute("data-year")
         }
     });
+  }
+
+  modalCloseHandler = (e) => {
+      this.setState({isShowingModal: false});
   }
 }
 

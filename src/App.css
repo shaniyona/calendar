@@ -70,4 +70,7 @@
   font-weight: bold;
 }
 
+.eventModalFormNavBar span:hover, .eventModalFormFooter button:hover {
+  cursor: pointer;
+}
 
