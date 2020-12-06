@@ -13,8 +13,9 @@ class Calendar extends Component {
     }
 
     componentDidMount() {
-        // console.log(this.state);
-
+        setInterval(() => {
+            this.setState({date: new Date()});
+        },5000);
     }
   
     componentWillUnmount() {
