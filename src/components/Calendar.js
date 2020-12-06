@@ -41,9 +41,9 @@ class Calendar extends Component {
         if(this.state.isShowingModal){
             const minutes = this.state.date.getMinutes();
             const hours = this.state.date.getHours();
-            const day = this.state.date.getDate();
-            const month = this.state.date.getMonth() + 1;
-            const year = this.state.date.getFullYear();
+            const day = this.state.clickedTile.day;
+            const month = DateUtil.monthToNum(this.state.clickedTile.month) + 1;
+            const year = this.state.clickedTile.year;
 
             const formattedMinutes = (minutes < 10) ? `0${minutes}` : minutes; 
             const formattedHours = (hours < 10) ? `0${hours}` : hours; 
