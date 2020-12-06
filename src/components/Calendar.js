@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CalendarTile  from '../components/CalendarTile.js'
 import {MONTH_MODE, WEEK_MODE, DAY_MODE} from '../ViewMode.js'
 import EventModal  from './EventModal.js'
+import * as DateUtil from '../util/CalendarUtil.js';
 
 class Calendar extends Component {
     constructor(props) {
@@ -29,32 +30,14 @@ class Calendar extends Component {
         };
     }
 
-    calculateNumDays(year, month) {
-        switch(month) {
-            case 0: return 31;
-            case 1: return(((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) ? 29 : 28);
-            case 2: return 31;
-            case 3: return 30;
-            case 4: return 31;
-            case 5: return 30;
-            case 6: return 31;
-            case 7: return 31;
-            case 8: return 30;
-            case 9: return 31;
-            case 10: return 30;
-            case 11: return 31;
-            default:
-                return 0;
-        }
-    }
-
     render() {
-        const totNumDays = this.calculateNumDays(this.state.firstDay.getFullYear(),this.state.firstDay.getMonth());
+        const totNumDays = DateUtil.calculateNumDays(this.state.firstDay.getFullYear(),this.state.firstDay.getMonth());
         const totNumWeeks = Math.ceil(totNumDays / 7);
         let isFirstWeek = true;
         const weeks = [];
 
         let modal;
+        
         if(this.state.isShowingModal){
             const minutes = this.state.date.getMinutes();
             const hours = this.state.date.getHours();
