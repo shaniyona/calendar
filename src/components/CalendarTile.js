@@ -12,7 +12,7 @@ class CalendarTile extends Component {
     const monthName = DateUtil.numToMonth(this.props.date.getMonth());
     
     return (
-      <div className="calendarTile" data-month={monthName} data-day={this.props.date.getDate()} data-year={this.props.date.getFullYear()}>
+      <div className="calendarTile" data-index={this.props.index} data-month={monthName} data-day={this.props.date.getDate()} data-year={this.props.date.getFullYear()}>
         {this.props.isFirstWeek
           ? <p>{dayName}</p>
           : null

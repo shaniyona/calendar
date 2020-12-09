@@ -7,7 +7,8 @@ class EventModal extends Component {
           title: '',
           date: this.props.date,
           time: this.props.time,
-          location: '' 
+          location: '',
+          index: this.props.index 
         }
 
     }

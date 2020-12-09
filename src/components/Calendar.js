@@ -10,7 +10,11 @@ class Calendar extends Component {
 
         this.state = this.setUpCalendar();
         this.state.isShowingModal = false;
-        this.state.eventList = [];
+        this.state.eventList = new Array(35);
+
+        for(let i = 0; i < this.state.eventList.length; i++){
+            this.state.eventList[i] = new Array();
+        }
     }
 
     componentDidMount() {
@@ -55,9 +59,9 @@ class Calendar extends Component {
             const formattedDate = `${year}-${formattedMonth}-${formattedDay}`
             const formattedTime = `${formattedHours}:${formattedMinutes}`;
 
-            modal = <EventModal clickedTile={this.state.clickedTile}
-                time={formattedTime}
+            modal = <EventModal time={formattedTime}
                 date={formattedDate}
+                index={this.state.clickedTile.index}
                 onCloseHandler={this.modalCloseHandler}
                 addEvent={this.addEvent}
             />;
@@ -69,14 +73,15 @@ class Calendar extends Component {
         //setting first day of week as date
         let diff = 0 - date.getDay();
         date.setDate(date.getDate() + diff);
-
+        let index = 0;
         for (let i = 1; i <= totNumDays; i += 7) {
             const week = [];
             // iterate through days of week and populate week array
             for (let j = 0; j < 7; j++) {
                 let newDate = new Date(date);
-                week.push(<CalendarTile date={newDate} isFirstWeek={isFirstWeek} />);
+                week.push(<CalendarTile index={index} date={newDate} isFirstWeek={isFirstWeek}/>);
                 date.setDate(date.getDate() + 1);
+                index++;
             }
             isFirstWeek = false;
             weeks.push(week);
@@ -103,6 +108,7 @@ class Calendar extends Component {
         this.setState({
             isShowingModal: true,
             clickedTile: {
+                index: e.target.getAttribute("data-index"),
                 day: e.target.getAttribute("data-day"),
                 month: e.target.getAttribute("data-month"),
                 year: e.target.getAttribute("data-year")
@@ -115,8 +121,9 @@ class Calendar extends Component {
     }
 
     addEvent = (event) => {
-        this.state.eventList.push(event);
+        this.state.eventList[parseInt(event.index)].push(event);
         this.setState({eventList: this.state.eventList});
+        console.log(this.state.eventList);
     }
 }
 
