@@ -79,7 +79,7 @@ class Calendar extends Component {
             // iterate through days of week and populate week array
             for (let j = 0; j < 7; j++) {
                 let newDate = new Date(date);
-                week.push(<CalendarTile index={index} date={newDate} isFirstWeek={isFirstWeek}/>);
+                week.push(<CalendarTile index={index} date={newDate} isFirstWeek={isFirstWeek} events={this.state.eventList[index]}/>);
                 date.setDate(date.getDate() + 1);
                 index++;
             }

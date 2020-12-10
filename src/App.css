@@ -74,3 +74,12 @@
   cursor: pointer;
 }
 
+.calendarEventTile{
+  background-color: rgb(121, 134, 203);
+  color: white;
+  overflow: hidden;
+  margin: 0.5rem 0.2rem;
+  border-radius: 3px;
+  
+}
+
