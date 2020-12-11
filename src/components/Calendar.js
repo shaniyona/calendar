@@ -96,7 +96,6 @@ class Calendar extends Component {
         );
     }
 
-
     onTileClick = (e) => {
         if (e.target.classList.contains("modal") === false && this.state.isShowingModal === true) {
             this.setState({ isShowingModal: false });
@@ -105,13 +104,24 @@ class Calendar extends Component {
             return;
         }
 
+        let calendarTile;
+        if(e.target.classList[0] === "calendarTile"){
+            calendarTile = e.target;
+        } else {
+            /* 
+            * TODO (shani): loop upwards from child to parent node until we reach 
+            * calendarTile - helper func that will automatically loop until calTile reached
+            */
+            calendarTile = e.target.parentNode;
+        }
+
         this.setState({
             isShowingModal: true,
             clickedTile: {
-                index: e.target.getAttribute("data-index"),
-                day: e.target.getAttribute("data-day"),
-                month: e.target.getAttribute("data-month"),
-                year: e.target.getAttribute("data-year")
+                index: calendarTile.getAttribute("data-index"),
+                day: calendarTile.getAttribute("data-day"),
+                month: calendarTile.getAttribute("data-month"),
+                year: calendarTile.getAttribute("data-year")
             }
         });
     }
