@@ -14,7 +14,7 @@ class CalendarTile extends Component {
 
     let eventList = [];
     for(let i = 0; i < this.props.events.length; i++) {
-      eventList.push(<div className="calendarEventTile">{this.props.events[i].title}</div>);
+      eventList.push(<div className="calendarEventTile" data-id={i}>{this.props.events[i].title}</div>);
     }
     // if(this.props.events.length > 0){
     //   console.log(this.props.events[0].title);
@@ -30,7 +30,9 @@ class CalendarTile extends Component {
           : null
         }
         <span>{this.props.date.getDate()}</span>
-        {eventList}
+        <div className="eventsContainer">
+          {eventList}
+        </div>
       </div>
 
     )

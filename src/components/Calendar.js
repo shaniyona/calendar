@@ -58,13 +58,26 @@ class Calendar extends Component {
             const formattedMonth = (month < 10) ? `0${month}` : month;
             const formattedDate = `${year}-${formattedMonth}-${formattedDay}`
             const formattedTime = `${formattedHours}:${formattedMinutes}`;
-
-            modal = <EventModal time={formattedTime}
+            
+            if(this.state.clickedEvent){
+                modal = <EventModal
+                event={this.state.clickedEvent}
+                date={formattedDate}
+                index={this.state.clickedTile.index}
+                onCloseHandler={this.modalCloseHandler}
+                addEvent={this.addEvent}
+                />;
+            } else {
+                modal = <EventModal
+                time={formattedTime}
                 date={formattedDate}
                 index={this.state.clickedTile.index}
                 onCloseHandler={this.modalCloseHandler}
                 addEvent={this.addEvent}
             />;
+            }
+
+
         }
 
         // start at 1 because firstday = 1, iterate by week by incrementing by 7
@@ -97,14 +110,18 @@ class Calendar extends Component {
     }
 
     onTileClick = (e) => {
+        // check to see if user is clicking outside the modal when it is showing, close modal if yes
         if (e.target.classList.contains("modal") === false && this.state.isShowingModal === true) {
             this.setState({ isShowingModal: false });
             return;
+        // if you click on the modal and its open, leave it open/nothing happens
         } else if (e.target.classList.contains("modal") === true && this.state.isShowingModal === true) {
             return;
         }
 
         let calendarTile;
+        // check to see if calendarTile or child/grandchild is clicked
+        let clickedEvent = e.target;
         if(e.target.classList[0] === "calendarTile"){
             calendarTile = e.target;
         } else {
@@ -112,7 +129,22 @@ class Calendar extends Component {
             * TODO (shani): loop upwards from child to parent node until we reach 
             * calendarTile - helper func that will automatically loop until calTile reached
             */
-            calendarTile = e.target.parentNode;
+           let isCalendarTile = false;
+           while(!isCalendarTile){
+                if(e.target.classList[0] === "calendarTile"){
+                    calendarTile = e.target;
+                    isCalendarTile = true;
+                } else {
+                    e.target = e.target.parentNode;
+                }
+           }
+        }
+
+        let event;
+        if(clickedEvent.className === "calendarEventTile"){
+            const eventIndex = parseInt(clickedEvent.getAttribute("data-id"));
+            const dateIndex = calendarTile.getAttribute("data-index");
+            event = this.state.eventList[dateIndex][eventIndex]; 
         }
 
         this.setState({
@@ -121,8 +153,9 @@ class Calendar extends Component {
                 index: calendarTile.getAttribute("data-index"),
                 day: calendarTile.getAttribute("data-day"),
                 month: calendarTile.getAttribute("data-month"),
-                year: calendarTile.getAttribute("data-year")
-            }
+                year: calendarTile.getAttribute("data-year"),
+            },
+            clickedEvent: event
         });
     }
 

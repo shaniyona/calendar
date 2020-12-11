@@ -3,13 +3,31 @@ import React, { Component } from 'react';
 class EventModal extends Component {
     constructor(props){
         super(props);
-        this.state = {
-          title: '',
-          date: this.props.date,
-          time: this.props.time,
-          location: '',
-          index: this.props.index 
+        console.log(this.props);
+        if(this.props.event){
+          this.state = {
+            title: this.props.event.title,
+            date: this.props.event.date,
+            time: this.props.event.time,
+            location: this.props.event.location,
+            index: this.props.index 
+          }
+        } else {
+          this.state = {
+            title: '',
+            date: this.props.date,
+            time: this.props.time,
+            location: '',
+            index: this.props.index 
+          }
         }
+        console.log(this.state);
+        console.log(this.state.title);
+        console.log(this.state.date);
+        console.log(this.state.time);
+        console.log(this.state.location);
+
+
 
     }
   render() {
@@ -19,10 +37,10 @@ class EventModal extends Component {
             <span className="modal" onClick={this.props.onCloseHandler}>X</span>
           </div>
           <form className="modal eventModalForm">
-            <input className="modal" type="text" placeholder="Event title" onChange={this.handleEventTitleChange} required="required"></input>
-            <input className="modal" type="date" defaultValue={this.props.date} onChange={this.handleDateChange}></input>
-            <input className="modal" type="time" defaultValue={this.props.time} onChange={this.handleTimeChange}></input>
-            <input className="modal" type="text" placeholder="Enter location" onChange={this.handleLocationChange}></input>
+            <input className="modal" type="text" value={this.state.title} placeholder="Event title" onChange={this.handleEventTitleChange} required="required"></input>
+            <input className="modal" type="date" defaultValue={this.state.date} onChange={this.handleDateChange}></input>
+            <input className="modal" type="time" defaultValue={this.state.time} onChange={this.handleTimeChange}></input>
+            <input className="modal" type="text" value={this.state.location} placeholder="Enter location" onChange={this.handleLocationChange}></input>
             <div className="modal eventModalFormFooter">
               <input className="modal" type="submit" onClick={this.onSaveModal} value="Save"></input>
             </div>
