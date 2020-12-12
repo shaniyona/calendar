@@ -66,6 +66,7 @@ class Calendar extends Component {
                 index={this.state.clickedTile.index}
                 onCloseHandler={this.modalCloseHandler}
                 addEvent={this.addEvent}
+                editEvent={this.editEvent}
                 />;
             } else {
                 modal = <EventModal
@@ -74,6 +75,7 @@ class Calendar extends Component {
                 index={this.state.clickedTile.index}
                 onCloseHandler={this.modalCloseHandler}
                 addEvent={this.addEvent}
+                editEvent={this.editEvent}
             />;
             }
 
@@ -141,22 +143,42 @@ class Calendar extends Component {
         }
 
         let event;
+        let eventIndex;
         if(clickedEvent.className === "calendarEventTile"){
-            const eventIndex = parseInt(clickedEvent.getAttribute("data-id"));
+            eventIndex = parseInt(clickedEvent.getAttribute("data-id"));
             const dateIndex = calendarTile.getAttribute("data-index");
             event = this.state.eventList[dateIndex][eventIndex]; 
-        }
+        } 
 
-        this.setState({
-            isShowingModal: true,
-            clickedTile: {
-                index: calendarTile.getAttribute("data-index"),
-                day: calendarTile.getAttribute("data-day"),
-                month: calendarTile.getAttribute("data-month"),
-                year: calendarTile.getAttribute("data-year"),
-            },
-            clickedEvent: event
-        });
+        if(event){
+            this.setState({
+                isShowingModal: true,
+                clickedTile: {
+                    index: calendarTile.getAttribute("data-index"),
+                    day: calendarTile.getAttribute("data-day"),
+                    month: calendarTile.getAttribute("data-month"),
+                    year: calendarTile.getAttribute("data-year"),
+                },
+                clickedEvent: {
+                    title: event.title,
+                    date: event.date,
+                    time: event.time,
+                    location: event.location,
+                    index: eventIndex
+                }
+            });
+        } else {
+            this.setState({
+                isShowingModal: true,
+                clickedTile: {
+                    index: calendarTile.getAttribute("data-index"),
+                    day: calendarTile.getAttribute("data-day"),
+                    month: calendarTile.getAttribute("data-month"),
+                    year: calendarTile.getAttribute("data-year"),
+                },
+                clickedEvent: event
+            });
+        }
     }
 
     modalCloseHandler = (e) => {
@@ -167,6 +189,13 @@ class Calendar extends Component {
         this.state.eventList[parseInt(event.index)].push(event);
         this.setState({eventList: this.state.eventList});
         console.log(this.state.eventList);
+    }
+
+    editEvent = (event) => {
+        this.state.eventList [parseInt(event.index)][parseInt(event.eventIndex)] = event;
+        this.setState({eventList: this.state.eventList});
+        console.log(this.state.eventList);
+
     }
 }
 

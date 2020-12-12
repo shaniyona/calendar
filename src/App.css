@@ -34,6 +34,7 @@
   top: 50%;
   width: 40%;
   height: 65%;
+  max-height: 400px;
   overflow: auto;
   background-color: rgb(255, 255, 255, 1);
   /* border: 1px solid black; */
@@ -54,7 +55,7 @@
 
 .eventModalFormFooter {
   background-color: white;
-  height: 1.5rem;
+  /* height: 1.5rem; */
   text-align: right;
   padding: 0.7rem;
   border-top: 1px solid rgba(143, 133, 133, 0.4);
@@ -94,5 +95,5 @@
 .eventsContainer {
   overflow-y: auto;
   height: 80%;
-  border: 1px dotted red;
+  /* border: 1px dotted red; */
 }

@@ -10,7 +10,9 @@ class EventModal extends Component {
             date: this.props.event.date,
             time: this.props.event.time,
             location: this.props.event.location,
-            index: this.props.index 
+            index: this.props.index,
+            eventIndex: this.props.event.index
+            
           }
         } else {
           this.state = {
@@ -21,15 +23,8 @@ class EventModal extends Component {
             index: this.props.index 
           }
         }
-        console.log(this.state);
-        console.log(this.state.title);
-        console.log(this.state.date);
-        console.log(this.state.time);
-        console.log(this.state.location);
-
-
-
     }
+
   render() {
     return (
         <div className="modal eventModalContainer">
@@ -50,7 +45,11 @@ class EventModal extends Component {
   }
   onSaveModal = (e) => {
     e.preventDefault();
-    this.props.addEvent(this.state);
+    if( this.props.event){
+      this.props.editEvent(this.state);
+    } else {
+      this.props.addEvent(this.state);
+    }
     this.props.onCloseHandler();
   }
 
