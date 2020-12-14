@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CalendarTile from '../components/CalendarTile.js'
 import { MONTH_MODE, WEEK_MODE, DAY_MODE } from '../ViewMode.js'
 import EventModal from './EventModal.js'
+import NavBar from './NavBar.js'
 import * as DateUtil from '../util/CalendarUtil.js';
 
 class Calendar extends Component {
@@ -12,7 +13,7 @@ class Calendar extends Component {
         this.state.isShowingModal = false;
         this.state.eventList = new Array(35);
 
-        for(let i = 0; i < this.state.eventList.length; i++){
+        for (let i = 0; i < this.state.eventList.length; i++) {
             this.state.eventList[i] = new Array();
         }
     }
@@ -58,25 +59,25 @@ class Calendar extends Component {
             const formattedMonth = (month < 10) ? `0${month}` : month;
             const formattedDate = `${year}-${formattedMonth}-${formattedDay}`
             const formattedTime = `${formattedHours}:${formattedMinutes}`;
-            
-            if(this.state.clickedEvent){
+
+            if (this.state.clickedEvent) {
                 modal = <EventModal
-                event={this.state.clickedEvent}
-                date={formattedDate}
-                index={this.state.clickedTile.index}
-                onCloseHandler={this.modalCloseHandler}
-                addEvent={this.addEvent}
-                editEvent={this.editEvent}
+                    event={this.state.clickedEvent}
+                    date={formattedDate}
+                    index={this.state.clickedTile.index}
+                    onCloseHandler={this.modalCloseHandler}
+                    addEvent={this.addEvent}
+                    editEvent={this.editEvent}
                 />;
             } else {
                 modal = <EventModal
-                time={formattedTime}
-                date={formattedDate}
-                index={this.state.clickedTile.index}
-                onCloseHandler={this.modalCloseHandler}
-                addEvent={this.addEvent}
-                editEvent={this.editEvent}
-            />;
+                    time={formattedTime}
+                    date={formattedDate}
+                    index={this.state.clickedTile.index}
+                    onCloseHandler={this.modalCloseHandler}
+                    addEvent={this.addEvent}
+                    editEvent={this.editEvent}
+                />;
             }
 
 
@@ -94,7 +95,7 @@ class Calendar extends Component {
             // iterate through days of week and populate week array
             for (let j = 0; j < 7; j++) {
                 let newDate = new Date(date);
-                week.push(<CalendarTile index={index} date={newDate} isFirstWeek={isFirstWeek} events={this.state.eventList[index]}/>);
+                week.push(<CalendarTile index={index} date={newDate} isFirstWeek={isFirstWeek} events={this.state.eventList[index]} />);
                 date.setDate(date.getDate() + 1);
                 index++;
             }
@@ -102,11 +103,13 @@ class Calendar extends Component {
             weeks.push(week);
         }
 
-
         return (
-            <div className="month" onClick={this.onTileClick}>
-                {weeks.map(el => <div className="week">{el}</div>)}
-                {modal}
+            <div>
+                <NavBar addEventHandler={this.onAddEventClick} date={this.state.date}></NavBar>
+                <div className="month" onClick={this.onTileClick}>
+                    {weeks.map(el => <div className="week">{el}</div>)}
+                    {modal}
+                </div>
             </div>
         );
     }
@@ -116,7 +119,7 @@ class Calendar extends Component {
         if (e.target.classList.contains("modal") === false && this.state.isShowingModal === true) {
             this.setState({ isShowingModal: false });
             return;
-        // if you click on the modal and its open, leave it open/nothing happens
+            // if you click on the modal and its open, leave it open/nothing happens
         } else if (e.target.classList.contains("modal") === true && this.state.isShowingModal === true) {
             return;
         }
@@ -124,33 +127,33 @@ class Calendar extends Component {
         let calendarTile;
         // check to see if calendarTile or child/grandchild is clicked
         let clickedEvent = e.target;
-        if(e.target.classList[0] === "calendarTile"){
+        if (e.target.classList[0] === "calendarTile") {
             calendarTile = e.target;
         } else {
             /* 
             * TODO (shani): loop upwards from child to parent node until we reach 
             * calendarTile - helper func that will automatically loop until calTile reached
             */
-           let isCalendarTile = false;
-           while(!isCalendarTile){
-                if(e.target.classList[0] === "calendarTile"){
+            let isCalendarTile = false;
+            while (!isCalendarTile) {
+                if (e.target.classList[0] === "calendarTile") {
                     calendarTile = e.target;
                     isCalendarTile = true;
                 } else {
                     e.target = e.target.parentNode;
                 }
-           }
+            }
         }
 
         let event;
         let eventIndex;
-        if(clickedEvent.className === "calendarEventTile"){
+        if (clickedEvent.className === "calendarEventTile") {
             eventIndex = parseInt(clickedEvent.getAttribute("data-id"));
             const dateIndex = calendarTile.getAttribute("data-index");
-            event = this.state.eventList[dateIndex][eventIndex]; 
-        } 
+            event = this.state.eventList[dateIndex][eventIndex];
+        }
 
-        if(event){
+        if (event) {
             this.setState({
                 isShowingModal: true,
                 clickedTile: {
@@ -186,16 +189,27 @@ class Calendar extends Component {
     }
 
     addEvent = (event) => {
-        this.state.eventList[parseInt(event.index)].push(event);
-        this.setState({eventList: this.state.eventList});
+        const eventDate = event.date.split('-');
+        const eventMonth =  DateUtil.numToMonth(parseInt(eventDate[1])-1); 
+        const eventDay = parseInt(eventDate[2]);
+        
+        const selectedDate = document.querySelectorAll(`[data-day="${eventDay}"][data-month="${eventMonth}"]`);
+        const eventIndex = selectedDate[0].getAttribute("data-index");
+        this.state.eventList[parseInt(eventIndex)].push(event);
+        this.setState({ eventList: this.state.eventList });
         console.log(this.state.eventList);
     }
 
     editEvent = (event) => {
-        this.state.eventList [parseInt(event.index)][parseInt(event.eventIndex)] = event;
-        this.setState({eventList: this.state.eventList});
+        this.state.eventList[parseInt(event.index)][parseInt(event.eventIndex)] = event;
+        this.setState({ eventList: this.state.eventList });
         console.log(this.state.eventList);
 
+    }
+
+    onAddEventClick = () => {
+        this.setState({isShowingModal: true});
+        
     }
 }
 

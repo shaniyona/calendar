@@ -1,3 +1,8 @@
+body{
+  max-height: 95vh;
+  overflow: hidden;
+}
+
 .month {
   width: 100%;
   height: 100%;
@@ -10,7 +15,7 @@
   height: calc(100vh/5);
 }
 .calendarTile {
-  border: 1px solid black;
+  border: #dadce0 1px solid;
   width: calc(100% / 7);
   text-align: center;
 }
@@ -61,7 +66,7 @@
   border-top: 1px solid rgba(143, 133, 133, 0.4);
 }
 
-.eventModalFormFooter button {
+.eventModalFormFooter input {
   color: white;
   background-color: rgb(0,0,205);
   padding: 0.5rem 1rem;
@@ -83,9 +88,10 @@
 }
 
 .calendarEventTile{
-  background-color: rgb(121, 134, 203);
+  background-color:rgb(3, 155, 229);
   color: white;
   overflow: hidden;
+  padding: 0.1em 0.1em;
   margin: 0.2rem 0.2rem;
   border-radius: 3px;
   line-height: 16px;
@@ -96,4 +102,43 @@
   overflow-y: auto;
   height: 80%;
   /* border: 1px dotted red; */
+}
+
+.dateNumContainer{
+  font-size: 14px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.dateNumContainer span{
+  margin-right: 5px;
+}
+#currentDateNumber {
+  text-align: center;
+  padding: 3.5px;
+  background-color: rgb(26,115,232);
+  color:white;
+  border-radius: 50%;
+  
+}
+
+.dayOfWeek{
+  color:rgb(112,117,122);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.navBar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 5px;
+  color:rgb(69, 72, 75);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.navBar button{
+  border-radius: 10%;
 }

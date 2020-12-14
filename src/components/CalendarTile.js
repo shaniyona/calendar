@@ -13,23 +13,29 @@ class CalendarTile extends Component {
     // console.log(this.props.events);
 
     let eventList = [];
-    for(let i = 0; i < this.props.events.length; i++) {
+    for (let i = 0; i < this.props.events.length; i++) {
       eventList.push(<div className="calendarEventTile" data-id={i}>{this.props.events[i].title}</div>);
     }
     // if(this.props.events.length > 0){
     //   console.log(this.props.events[0].title);
     // }
+    const date = new Date();
     return (
       <div className="calendarTile" data-index={this.props.index} data-month={monthName} data-day={this.props.date.getDate()} data-year={this.props.date.getFullYear()}>
         {this.props.isFirstWeek
-          ? <p>{dayName}</p>
+          ? <p className="dayOfWeek">{dayName}</p>
           : null
         }
-        {this.props.date.getDate() === 1
-          ? <span>{monthName} </span>
-          : null
-        }
-        <span>{this.props.date.getDate()}</span>
+        <div className="dateNumContainer">
+          {this.props.date.getDate() === 1
+            ? <span>{monthName}</span>
+            : null
+          }
+          {this.props.date.getDate() === date.getDate()
+            ? <span id="currentDateNumber">{this.props.date.getDate()}</span>
+            : <span>{this.props.date.getDate()}</span>
+          }
+        </div>
         <div className="eventsContainer">
           {eventList}
         </div>
