@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CalendarTile from '../components/CalendarTile.js'
-import { MONTH_MODE, WEEK_MODE, DAY_MODE } from '../ViewMode.js'
 import EventModal from './EventModal.js'
 import NavBar from './NavBar.js'
 import * as DateUtil from '../util/CalendarUtil.js';
@@ -21,7 +20,7 @@ class Calendar extends Component {
     componentDidMount() {
         setInterval(() => {
             this.setState({ date: new Date() });
-        }, 5000);
+        }, 10000);
     }
 
     componentWillUnmount() {
@@ -95,7 +94,11 @@ class Calendar extends Component {
             // iterate through days of week and populate week array
             for (let j = 0; j < 7; j++) {
                 let newDate = new Date(date);
+
+                // //arranging array with events by time
+                // console.log(this.arrangeEvents(this.state.eventList[index], index));
                 week.push(<CalendarTile index={index} date={newDate} isFirstWeek={isFirstWeek} events={this.state.eventList[index]} />);
+
                 date.setDate(date.getDate() + 1);
                 index++;
             }
@@ -191,25 +194,43 @@ class Calendar extends Component {
     addEvent = (event) => {
         const eventDate = event.date.split('-');
         const eventMonth =  DateUtil.numToMonth(parseInt(eventDate[1])-1); 
-        const eventDay = parseInt(eventDate[2]);
-        
+        const eventDay = parseInt(eventDate[2]); 
         const selectedDate = document.querySelectorAll(`[data-day="${eventDay}"][data-month="${eventMonth}"]`);
         const eventIndex = selectedDate[0].getAttribute("data-index");
+
         this.state.eventList[parseInt(eventIndex)].push(event);
         this.setState({ eventList: this.state.eventList });
-        console.log(this.state.eventList);
     }
 
     editEvent = (event) => {
-        this.state.eventList[parseInt(event.index)][parseInt(event.eventIndex)] = event;
-        this.setState({ eventList: this.state.eventList });
-        console.log(this.state.eventList);
+        const eventDate = event.date.split('-');
+        const eventMonth =  DateUtil.numToMonth(parseInt(eventDate[1])-1); 
+        const eventDay = parseInt(eventDate[2]); 
+        const selectedDate = document.querySelectorAll(`[data-day="${eventDay}"][data-month="${eventMonth}"]`);
+        const eventIndex = selectedDate[0].getAttribute("data-index");
 
+        this.state.eventList[parseInt(eventIndex)].push(event);
+        this.state.eventList[parseInt(event.index)].splice(parseInt(event.eventIndex), 1);
+        this.setState({ eventList: this.state.eventList });
     }
 
     onAddEventClick = () => {
-        this.setState({isShowingModal: true});
-        
+        const date = new Date();
+        const day = date.getDate();
+        const month = DateUtil.numToMonth(date.getMonth());
+        const year = this.state.date.getFullYear();
+        const selectedDate = document.querySelectorAll(`[data-day="${day}"][data-month="${month}"]`);
+        const eventIndex = selectedDate[0].getAttribute("data-index");
+
+        this.setState({
+            isShowingModal: true,
+            clickedTile: {
+                index: eventIndex,
+                day: day,
+                month: month,
+                year: year,
+            }
+        });
     }
 }
 

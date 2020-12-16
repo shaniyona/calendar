@@ -11,9 +11,11 @@ class NavBar extends Component {
       const monthName = DateUtil.numTofullMonthName(this.props.date.getMonth());
         return(
           <div className="navBar">
-            <button onClick={this.props.addEventHandler}>Add Event</button>
-            <span>{monthName} {this.props.date.getFullYear()}</span>
+            <input type="button" value="Add Event"onClick={this.props.addEventHandler}></input>
             <div></div>
+            <div></div>
+            <span>{monthName} {this.props.date.getFullYear()}</span>
+          
           </div>
         )
     }

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class EventModal extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
+    
     if (this.props.event) {
       this.state = {
         title: this.props.event.title,
