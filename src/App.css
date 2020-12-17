@@ -12,7 +12,7 @@ body{
 .week {
   display: flex;
   width: 100%;
-  height: calc(95.5vh/5);
+  height: calc(90vh/5);
 }
 .calendarTile {
   border: #dadce0 1px solid;
@@ -38,7 +38,7 @@ body{
   left: 50%;
   top: 50%;
   width: 40%;
-  height: 65%;
+  height: 70%;
   max-height: 400px;
   overflow: auto;
   background-color: rgb(255, 255, 255, 1);
@@ -49,7 +49,7 @@ body{
 
 .eventModalForm {
   border-radius: 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .eventModalForm input{
@@ -60,9 +60,7 @@ body{
 
 .eventModalFormFooter {
   background-color: white;
-  /* height: 1.5rem; */
   text-align: right;
-  padding: 0.7rem;
   border-top: 1px solid rgba(143, 133, 133, 0.4);
 }
 
@@ -72,6 +70,7 @@ body{
   padding: 0.5rem 1rem;
   border-radius: 3px;
   border: none;
+  float: right;
 }
 
 .eventModalFormNavBar{
