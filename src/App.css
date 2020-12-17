@@ -52,7 +52,7 @@ body{
   overflow-y: auto;
 }
 
-.eventModalForm input{
+.eventData{
   display: block;
   padding: 1rem;
   margin: 1rem;
@@ -64,13 +64,25 @@ body{
   border-top: 1px solid rgba(143, 133, 133, 0.4);
 }
 
-.eventModalFormFooter input {
+.submit {
   color: white;
+  margin: 1rem;
   background-color: #1a73e8;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.7rem;
   border-radius: 3px;
   border: none;
   float: right;
+}
+
+.delete {
+  color: white;
+  margin: 1rem;
+  display: block;
+  background-color: #d31515;
+  padding: 0.5rem 0.7rem;
+  border-radius: 3px;
+  border: none;
+  float: left;
 }
 
 .eventModalFormNavBar{

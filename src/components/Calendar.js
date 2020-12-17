@@ -67,6 +67,7 @@ class Calendar extends Component {
                     onCloseHandler={this.modalCloseHandler}
                     addEvent={this.addEvent}
                     editEvent={this.editEvent}
+                    deleteEvent={this.deleteEvent}
                 />;
             } else {
                 modal = <EventModal
@@ -210,6 +211,11 @@ class Calendar extends Component {
         const eventIndex = selectedDate[0].getAttribute("data-index");
 
         this.state.eventList[parseInt(eventIndex)].push(event);
+        this.state.eventList[parseInt(event.index)].splice(parseInt(event.eventIndex), 1);
+        this.setState({ eventList: this.state.eventList });
+    }
+
+    deleteEvent = (event) => {
         this.state.eventList[parseInt(event.index)].splice(parseInt(event.eventIndex), 1);
         this.setState({ eventList: this.state.eventList });
     }

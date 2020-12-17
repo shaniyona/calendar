@@ -32,17 +32,28 @@ class EventModal extends Component {
                     <span className="modal" onClick={this.props.onCloseHandler}>X</span>
                 </div>
                 <form className="modal eventModalForm" onSubmit={this.onSaveModal}>
-                    <input className="modal" type="text" value={this.state.title} placeholder="Event title" onChange={this.handleEventTitleChange} required></input>
-                    <input className="modal" type="date" defaultValue={this.state.date} onChange={this.handleDateChange}></input>
-                    <input className="modal" type="time" defaultValue={this.state.time} onChange={this.handleTimeChange}></input>
-                    <input className="modal" type="text" value={this.state.location} placeholder="Enter location" onChange={this.handleLocationChange}></input>
+                    <input className="modal eventData" type="text" value={this.state.title} placeholder="Event title" onChange={this.handleEventTitleChange} required></input>
+                    <input className="modal eventData" type="date" defaultValue={this.state.date} onChange={this.handleDateChange}></input>
+                    <input className="modal eventData" type="time" defaultValue={this.state.time} onChange={this.handleTimeChange}></input>
+                    <input className="modal eventData" type="text" value={this.state.location} placeholder="Enter location" onChange={this.handleLocationChange}></input>
                     <div className="modal eventModalFormFooter">
-                        <input className="modal" type="submit" value="Save"></input>
+                        {this.props.event
+                            ? <input className="delete" type="button" value="Delete" onClick={this.deleteEvent}/>
+                            : null
+                        }
+                        <input className="modal submit" type="submit" value="Save"/>
                     </div>
                 </form>
             </div>
         )
     }
+
+    deleteEvent = (e) => {
+        if(window.confirm("Are you sure you want to delete this event?")){
+            this.props.deleteEvent(this.state);
+        }
+    }
+
     onSaveModal = (e) => {
         e.preventDefault();
         if (this.props.event) {
