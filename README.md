@@ -1,3 +1,13 @@
+Prerequisites:
+1. have node installed
+2. have npm or yarn installed
+
+Running the application:
+1. download code or clone repo https://github.com/shaniyona/calendar.git
+2. cd to folder with code
+3. run command 'npm install' or 'yarn install'
+4. ensure port 3000 isnt in use, then run 'npm start' or 'yarn start'
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

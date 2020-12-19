@@ -94,7 +94,7 @@ body{
   font-weight: bold;
 }
 
-.eventModalFormNavBar span:hover, .eventModalFormFooter input:hover {
+.eventModalFormNavBar span:hover, .eventModalFormFooter input:hover{
   cursor: pointer;
 }
 
@@ -130,7 +130,6 @@ body{
   background-color: rgb(26,115,232);
   color:white;
   border-radius: 50%;
-  
 }
 
 .dayOfWeek{
@@ -157,6 +156,10 @@ body{
   color: white;
   padding: 0.4rem 1rem;
   border-radius: 3px;
+}
+.addEvent:hover, .delete:hover, .submit:hover{
+  cursor: pointer;
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
 }
 
 .tileDate{
